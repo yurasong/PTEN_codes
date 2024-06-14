@@ -89,33 +89,6 @@ sling_names <- names(sling_fixed@colData) %>%
 
 seuset@meta.data[sling_names] <- as.data.frame(sling_fixed@colData[sling_names])
 
-p1 <- seuset@meta.data %>%
-  dplyr::mutate(cell_type = fct_reorder(cell_type, slingPseudotime_1)) %>%
-  ggplot(aes(slingPseudotime_1, cell_type, col = cell_type)) +
-  geom_jitter() + ggtitle("Slingshot cell ordering", subtitle = "Lineage 1")
-
-ggsave(filename = file.path(sling_fig_path, "slingshot_ordering.pdf"), plot = p1, width = 16, height = 12)
-p1
-
-# Visualise on UMAP
-
-sling_names <- names(seuset@meta.data) %>%
-  .[str_detect(., "^slingPseudotime")]
-
-sling_umaps <- FeaturePlot(seuset,
-                           reduction = "umap",
-                           features = sling_names, combine = FALSE
-) %>%
-  map(~ . + scale_color_viridis_c(option = "inferno", na.value = "light grey") +
-        theme_void() + theme(aspect.ratio = 1))
-
-CombinePlots(plots = sling_umaps, ncol = 2) %>% 
-  annotate_figure(
-    top = text_grob("Slingshot with fixed topology",
-                    face = "bold", size = 16)
-  )
-ggsave(file.path(sling_fig_path, "sling_lineages_on_UMAP.pdf"), height=15, width=15, units="cm")
-
 ## Pseudotemporal gene dynamics
 
 library(gam, quietly = TRUE)
@@ -141,64 +114,5 @@ seuset@misc$PT_DE_results$slingshot <- list(
                  lineage2 = gam_fdr_t2,
                  lineage3 = gam_fdr_t3,
                  lineage4 = gam_fdr_t4)
-)
-
-### Heatmaps of top 100 DE genes along pseudotime lineages
-
-library(pheatmap)
-
-# make heatmaps of top 100 differential gene along each lineage
-sling_gam_results <- seuset@misc$PT_DE_results$slingshot$results
-lineage_pt <- list(
-  "lineage1" = seuset$slingPseudotime_1,
-  "lineage2" = seuset$slingPseudotime_2,
-  "lineage3" = seuset$slingPseudotime_3,
-  "lineage4" = seuset$slingPseudotime_4)
-
-
-# set celltype colors
-#ct_colors <- brewer.pal(n = length(levels(droplevels(seuset$cell_type))), "Paired")
-#names(ct_colors) <- levels(droplevels(seuset$cell_type))
-
-# make heatmap for each lineage
-pt_heatmaps <- pmap(
-  list(lineage_pt, sling_gam_results, names(lineage_pt)),
-  ~ makePseudotimeHeatmap(
-    pt = ..1,
-    gam_result = ..2,
-    response_data = FetchData(seuset,
-                              vars = VariableFeatures(seuset),
-                              slot = "data"
-    ),
-    n = 100,
-    anno_data = data.frame(
-      "cell_type" = droplevels(seuset$cell_type),
-      "Pseudotime" = .x
-    ),
-    anno_colors = list(
-      "cell_type" = ct_cols,
-      "Pseudotime" = colorRampPalette(brewer.pal(11, "RdYlBu"))(50)
-    ),
-    show_rownames = TRUE,
-    scaled = TRUE,
-    main_title = paste("Slingshot", ..3, ": top 100 significant DE genes")
-  )
-)
-
-# export plots
-save_pheatmap_pdf <- function(x, filename, width=16, height=12) {
-  pdf(filename, width = width, height = height)
-  grid::grid.newpage()
-  grid::grid.draw(x$gtable)
-  dev.off()
-}
-
-iwalk(
-  pt_heatmaps,
-  ~ save_pheatmap_pdf(
-    .x,
-    filename = file.path(sling_fig_path,
-                         paste0(.y, "-top100-DE_heatmap.pdf"))
-  )
 )
 
