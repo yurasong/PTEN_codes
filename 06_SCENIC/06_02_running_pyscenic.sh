@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #######################################################################################
 # 06_02_running_pyscenic.sh
 # Please run this on bash environment.
@@ -7,8 +9,6 @@
 # Conda environment is included in 06_00_conda_env.txt
 # To adjust stochastic bias, we run the pipeline for 10 times with same parameters.
 #######################################################################################
-
-#!/usr/bin/env bash
 
 conda activate pyscenic
 
