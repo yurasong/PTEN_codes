@@ -2,7 +2,6 @@
 # 07_03_CellAtlas.R
 # This script is used for geneset enrichment analysis on public human prostate tumour scRNA-seq data.
 # Reference article: https://www.sciencedirect.com/science/article/pii/S2211124721016284?via%3Dihub
-# Public data source is mentioned in Data Availability section of manuscript.
 #######################################################################################
 
 # Library

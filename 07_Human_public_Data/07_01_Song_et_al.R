@@ -2,7 +2,6 @@
 # 07_01_Song_et_al.R
 # This script is used for geneset enrichment analysis on public human prostate tumour scRNA-seq data.
 # Reference article: https://www.nature.com/articles/s41467-021-27322-4 
-# Public data source is mentioned in Data Availability section of manuscript.
 #######################################################################################
 
 # Library
