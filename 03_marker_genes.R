@@ -1,3 +1,9 @@
+#######################################################################################
+# 03_marker_genes.R
+# This script will generate the feature plots which shows gene expression.
+# Each related figures are mentioned as title.
+#######################################################################################
+
 # Library
 
 library(Seurat)
@@ -11,23 +17,13 @@ library(tidyverse)
 
 library(viridis)
 
-# Load data
 
-seuset <- readRDS("WT_PTEN.rds")
-
-# Take UMAP coordinate and gene expresion
-
-umap_coord <- as.data.frame(seuset@reductions$umap@cell.embeddings)
-
-seuset_gene <- merge.data.frame(umap_coord,t(as.data.frame(seuset@assays$RNA@data)),by=0)
-row.names(seuset_gene) <- seuset_gene$Row.names
-
-# Set-up the palette``
+# Set-up the colour scale
 
 myPalette <- viridis(n = 10, option = "C", direction = -1)
 sc <- scale_colour_gradientn(colours = rev(myPalette))
 
-# Plotting function
+# Definition of plotting function
 
 umap_color_scaled <- function(x)
 {
@@ -38,22 +34,80 @@ umap_color_scaled <- function(x)
   regulon_plot <- regulon_plot + sc
   regulon_plot <- regulon_plot + theme_bw() + 
     theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
-          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
-  
+          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
+          legend.position = "none",
+          axis.title.x=element_blank(),
+          axis.text.x=element_blank(),
+          axis.ticks.x=element_blank(),
+          axis.title.y=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank())
+    
   regulon_plot
 }
 
-# If there are several list of genes
+# Load proceeded data
 
-selected_regulons <- c("Mki67", "Top2a", "Cenpa", "Krt14", "Krt5", "Trp63",
-                       "Jun", "Fos", "Fosb", "Krt13",
-                       "Hoxb13", "Abo", "Spink1", "Nkx3-1", "Mmp7", "Fgl1", "Pbsn",
-                       "Dpp4", "Krt4", "Psca", "Foxi1", "Atp6v1g3", "Gsdma", "Tgm4",
-                       "Cldn10", "Msmb", "Cldn10", "Trpv6", 
-                       "Clu", "Ppp1r1b", "Tacstd2", "Wfdc2", "Krt7",
-                       "Cx3cr1", "Cd74", "H2-Aa", "Cxcl1", "Cxcl2", "Ifit1", "Irf6", "Ifi202b") # Genes we used for this paper
+wt1 <- readRDS("WT_PTEN.rds")
+pten6w <- readRDS("PTEN_6W.rds")
+pten10m <- readRDS("PTEN_10M.rds")
 
-for (i in 1:length(selected_regulons)){
-  umap_color_scaled(selected_regulons[i])
-  ggsave(paste(selected_regulons[i],"_Exp.pdf",sep=""), width = 10, height = 10, units = "cm")
+# Gene expression on WT
+
+umap_coord <- as.data.frame(wt1@reductions$umap@cell.embeddings)
+
+seuset_gene <- merge.data.frame(umap_coord,t(as.data.frame(wt1@assays$RNA@data)),by=0)
+row.names(seuset_gene) <- seuset_gene$Row.names
+
+marker_genes <- c("Krt13", "Aqp3", "Krt4", "Nkx3-1", # Genes in Fig.4
+                  "Krt14", "Krt5", "Trp63", "Psca", "Clu", "Wfdc2", "Ppp1r1b",
+                  "Sbp", "Sbpl", "Spink1", "Msmb", "Cldn10", "C1rb", "Tgm4", "Gsmda",
+                  "Mki67", "Cenpa") # Genes in Extended Fig. 3b-g
+
+lapply(marker_genes, umap_color_scaled) # For printing out each files on R
+
+for (i in 1:length(marker_genes)){
+  umap_color_scaled(marker_genes[i])
+  ggsave(paste(marker_genes[i],"_Exp_WT.pdf",sep=""), width = 10, height = 10, units = "cm") # To save
+}
+
+# Gene expression on PTEN 6W
+
+umap_coord <- as.data.frame(pten6w@reductions$umap@cell.embeddings)
+
+seuset_gene <- merge.data.frame(umap_coord,t(as.data.frame(pten6w@assays$RNA@data)),by=0)
+row.names(seuset_gene) <- seuset_gene$Row.names
+
+marker_genes <- c("Krt13", "Aqp3", "Krt4", "Nkx3-1", # Genes in Fig.4
+                  "Irf6", "Irf7", "Irf9", "Stat1", "Stat2", "Nfkb2", "Relb", # Genes in Fig.5
+                  "Krt14", "Krt5", "Trp63", "Psca", "Clu", "Wfdc2", "Ppp1r1b", "Ltf", "Pigr",
+                  "Krt6a", "Ly6d", "Sbp", "Sbpl", "Spink1", 
+                  "Tgm4", "Gsmda", "Mki67", "Cenpa", # Genes in Extended Data Fig. 3i-o
+                  "Elf3", "Grhl3", "Creb5") # Genes in Extended Data Fig.5k-m
+
+lapply(marker_genes, umap_color_scaled) # For printing out each files on R
+
+for (i in 1:length(marker_genes)){
+  umap_color_scaled(marker_genes[i])
+  ggsave(paste(marker_genes[i],"_Exp_PTEN_6W.pdf",sep=""), width = 10, height = 10, units = "cm") # To save
+}
+
+# Gene expression on PTEN 10M
+
+umap_coord <- as.data.frame(pten10m@reductions$umap@cell.embeddings)
+
+seuset_gene <- merge.data.frame(umap_coord,t(as.data.frame(pten10m@assays$RNA@data)),by=0)
+row.names(seuset_gene) <- seuset_gene$Row.names
+
+marker_genes <- c("Irf6", "Irf7", "Stat1", "Stat2", "Nfkb2", "Relb", # Genes in Fig.6b,
+                  "Krt14", "Krt13", "Aqp3", "Krt4", "Clu", "Wfdc2", "Pigr", "Ppp1r1b", # Genes in Fig. 6c-e,
+                  "Tacstd2", "Ltf", "Top2a", "Mki67", "Cenpa", "Ly6d", "Krt6a",
+                  "Nkx3-1", "Tgm4", "Cxcl1", "Cxcl2", "Cxcl5", "Cx3cr1",
+                  "Ifit1", "Ifitm2", "Ifi202b", "Cd74", "H2-Aa", "H2-Ab1") # Genes in Extended Data Fig.8b-h
+
+lapply(marker_genes, umap_color_scaled) # For printing out each files on R
+
+for (i in 1:length(marker_genes)){
+  umap_color_scaled(marker_genes[i])
+  ggsave(paste(marker_genes[i],"_Exp_PTEN_10M.pdf",sep=""), width = 10, height = 10, units = "cm") # To save
 }

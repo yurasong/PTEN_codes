@@ -84,7 +84,7 @@ ggplot(data=bc_lc_mer, aes(x=adjusted_bc_prop, y=adjusted_lc_prop, color = cell_
 
 ## For hybrid clusters
 
-hybrid <- bc_lc_mer[bc_lc_mer$cell_type == "HY_BC_Prox",]
+hybrid <- bc_lc_mer[bc_lc_mer$cell_type == "HY BC Prox",]
 
 ggplot(data=hybrid, aes(x=adjusted_bc_prop, y=adjusted_lc_prop, color = cell_type)) +
   geom_point() +
@@ -96,7 +96,7 @@ ggplot(data=hybrid, aes(x=adjusted_bc_prop, y=adjusted_lc_prop, color = cell_typ
   ylim(0.15, 1.2) +
   theme(legend.position = "none")
 
-hybrid <- bc_lc_mer[bc_lc_mer$cell_type == "HY_BC_AD",]
+hybrid <- bc_lc_mer[bc_lc_mer$cell_type == "HY Nkx3.1",]
 
 ggplot(data=hybrid, aes(x=adjusted_bc_prop, y=adjusted_lc_prop, color = cell_type)) +
   geom_point() +
