@@ -45,8 +45,8 @@ Each code file contains its own instructions for running the specific analyses.
 
 All raw sequencing datasets that support the findings of this study have been deposited in the NCBI Gene Expression Omnibus (GEO) under the following accession numbers:
 
-- **[GSE270187](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE270187)**: scRNA-seq  
-- **[GSE270189](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE270189)**: bulk RNA-seq, rapamycin treated  
+- **[GSE270187](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE270187)**: scRNA-seq (WT, PTEN 6W, PTEN 10M)
+- **[GSE270189](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE270189)**: bulk RNA-seq, Rapamycin treated  
 - **[GSE270190](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE270190)**: bulk RNA-seq, cell fate upon PTEN deletion in BC  
 - **[GSE286018](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE286018)**: bulk RNA-seq of P65/Pten knock BCs  
 - **[GSE286019](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE286019)**: bulk RNA-seq of basal-derived and luminal-derived tumors  
@@ -55,12 +55,10 @@ All raw sequencing datasets that support the findings of this study have been de
 
 Previously published human prostate cancer datasets re‐analyzed in this study were available via:
 
-
 - Song, H., *et al*. Nat Commun (2022): GitHub repository of the author ([scRNA-seq-Analysis-of-Prostate-Cancer-Samples](https://github.com/franklinhuanglab/scRNA-seq-Analysis-of-Prostate-Cancer-Samples))  
 - Tuong ZK., *et al*. Cell Rep (2021): the Prostate Cell Atlas ([prostatecellatlas.org](https://www.prostatecellatlas.org))  
 - Hirz T., *et al*. Nat Commun (2023): [GSE181294](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE181294)  
 - Wong, H.Y., *et al*. Nat Commun 13 (2022): [GSE185344](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE185344)
-
 
 ---
 
