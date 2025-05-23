@@ -1,3 +1,9 @@
+#######################################################################################
+# 02_ScatterPlot.R
+# This script will generate the scatter plot of BC-LC marker genes.
+# This code will generate plots in Fig.4g-i.
+#######################################################################################
+
 # Library
 
 library(Seurat)
@@ -10,19 +16,20 @@ library(tidyverse)
 library(scales)
 library(MASS)
 
-# Load data
-
-seuset <- readRDS("PTEN_6W.rds")
 
 ## Get information from meta.data
-meta <- seuset@meta.data[,c(3, ncol(seuset@meta.data))] # Should return nFeature_RNA and cell_type information
 
-## Load marker genes
+meta <- seuset@meta.data[,c(3, ncol(seuset@meta.data))]
+
+head(meta) # Should return nFeature_RNA and cell_type information
+
+## Load marker genes defined on WT data
 
 bc <- readRDS("02_Marker_Genes/BC_markers.rds")
 lc <- readRDS("02_Marker_Genes/LC_markers.rds")
 
-# Get a count table and proceed the data
+# Preparation of input for plot
+## Get a count table
 
 c_seuset <- as.matrix(seuset@assays[["RNA"]]@counts) # Count table for whole genes
 
