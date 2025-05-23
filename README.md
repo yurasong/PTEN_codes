@@ -13,13 +13,13 @@ A DOI and link to the final publication will be provided here once available.
 
 ## Contents
 
-- **02_Marker_Genes/** – Scripts for identifying marker genes in scRNA-seq data.
-- **04_Slingshot_scripts/** – Pseudotime trajectory analyses using Slingshot.
-- **06_SCENIC/** – Gene regulatory network inference with pySCENIC.
-- **07_Human_public_Data/** – Processing pipelines for public human single-cell datasets.
-- **08_bulKRNA-seq/** – Bulk RNA-seq alignment and analysis pipelines.
-- **09_bulkATAC-seq/** – Bulk ATAC-seq processing: alignment, peak calling, and motif prediction.
-- **R scripts in root**:
+- **02_Marker_Genes** – Scripts for identifying marker genes in scRNA-seq data.
+- **04_Slingshot_scripts** – Pseudotime trajectory analyses using Slingshot.
+- **06_SCENIC** – Gene regulatory network inference with pySCENIC.
+- **07_Human_public_Data** – Processing pipelines for public human single-cell datasets.
+- **08_bulKRNA-seq** – Bulk RNA-seq alignment and analysis pipelines.
+- **09_bulkATAC-seq** – Bulk ATAC-seq processing: alignment, peak calling, and motif prediction.
+- **R scripts in root: Related to scRNA-seq data analysis**:
   - `01_UMAP.R` – UMAP embedding and visualization.
   - `02_ScatterPlot.R` – Generation of scatter plots.
   - `03_marker_genes.R` – Visualization of marker gene expression.
